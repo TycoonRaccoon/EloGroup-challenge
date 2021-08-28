@@ -13,7 +13,7 @@ const Form = () => {
   const [formData, setFormData] = useState(initial_form_data)
   const history = useHistory()
 
-  const changehandler = (e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [e.target.name]: e.target.value })
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -26,17 +26,17 @@ const Form = () => {
     <StyledForm onSubmit={submitHandler}>
       <div>
         <label>Username *</label>
-        <input name='username' autoFocus required onChange={changehandler} />
+        <input name='username' autoFocus required onChange={changeHandler} />
       </div>
 
       <div>
         <label>Password *</label>
-        <input name='password' type='password' required minLength={8} pattern='^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$' onChange={changehandler} />
+        <input name='password' type='password' required minLength={8} pattern='^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$' onChange={changeHandler} />
       </div>
 
       <div>
         <label>Confirm Password *</label>
-        <input name='confirm_password' type='password' required pattern={formData.password} onChange={changehandler} />
+        <input name='confirm_password' type='password' required pattern={formData.password} onChange={changeHandler} />
       </div>
 
       <button>Register</button>

@@ -61,9 +61,14 @@ const Form = () => {
 
       <div>
         <p>Opportunities *</p>
-        <Opportunities changeHandler={opportunityHandler} />
-        <button>Save</button>
-        <p className='noDisplay' ref={message_ref} onAnimationEnd={(e)=>e.currentTarget.className='noDisplay'}>Lead created!</p>
+
+        <Opportunities opportunities={formData.opportunities} setOpportunities={opportunityHandler} />
+
+        <button type='submit'>Save</button>
+
+        <p className='noDisplay' onAnimationEnd={() => (message_ref.current!.className = 'noDisplay')} ref={message_ref}>
+          Lead created!
+        </p>
       </div>
     </StyledForm>
   )

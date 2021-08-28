@@ -1,41 +1,32 @@
 import StyledTable from './styles'
 
-import React, { ChangeEvent, FC, HTMLProps, useState } from 'react'
+import React, { FC, ChangeEvent, HTMLProps } from 'react'
 
 import { OpportunityType } from '../../../../../@types/lead'
 
 interface OpportunitiesProps extends HTMLProps<HTMLTableElement> {
-  changeHandler: (opportunities: OpportunityType[]) => void
+  setOpportunities: (opp: OpportunityType[]) => void
+  opportunities: OpportunityType[]
 }
 
-const Opportunities: FC<OpportunitiesProps> = ({ changeHandler }) => {
-  const opprtunities: OpportunityType[] = ['RPA', 'Digital Product', 'Analytics', 'BPM'] // To create new opprtunity just add the name to this list
-
-  const initial_checks: { [key: string]: boolean } = {}
-  opprtunities.forEach(name => (initial_checks[name] = false))
-
-  const [checks, setChecks] = useState(initial_checks)
+const Opportunities: FC<OpportunitiesProps> = ({ setOpportunities, opportunities }) => {
+  const all_opportunities: OpportunityType[] = ['RPA', 'Digital Product', 'Analytics', 'BPM'] // To create new opprtunity just add the name to this list
 
   const changeAllCheacksHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const new_checks = { ...checks }
-    opprtunities.forEach(name => (new_checks[name] = e.currentTarget.checked))
-    const opportunities_list = opprtunities.filter(name => new_checks[name])
+    const checked = e.currentTarget.checked
 
-    changeHandler(opportunities_list)
-    setChecks(new_checks)
+    setOpportunities(checked ? all_opportunities : [])
   }
 
   const checkChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.name
+    const checked = e.currentTarget.checked
+    const updated_list = checked ? [...opportunities, name] : opportunities.filter(opp => opp !== name)
 
-    const new_checks = { ...checks, [name]: !checks[name] }
-    const opportunities_list = opprtunities.filter(name => new_checks[name])
-
-    changeHandler(opportunities_list)
-    setChecks(new_checks)
+    setOpportunities(updated_list as OpportunityType[])
   }
 
-  const isAllChecksTrue = () => opprtunities.reduce((prev, curr) => prev && checks[curr], true)
+  const isAllChecksTrue = () => opportunities.length === all_opportunities.length
 
   return (
     <StyledTable>
@@ -50,10 +41,10 @@ const Opportunities: FC<OpportunitiesProps> = ({ changeHandler }) => {
       </thead>
 
       <tbody>
-        {opprtunities.map((name, i) => (
+        {all_opportunities.map((name, i) => (
           <tr key={i}>
             <td>
-              <input name={name} type='checkbox' onChange={checkChangeHandler} checked={checks[name]} />
+              <input name={name} type='checkbox' onChange={checkChangeHandler} checked={opportunities.includes(name)} />
             </td>
 
             <td>{name}</td>
