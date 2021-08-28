@@ -10,7 +10,6 @@ const StyledForm = styled.form`
   & div {
     display: flex;
     flex-direction: column;
-    align-self: center;
     width: 75%;
 
     & label {

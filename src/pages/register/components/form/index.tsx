@@ -1,6 +1,7 @@
+import StyledForm from './styles'
+
 import React, { useState, FormEvent, ChangeEvent } from 'react'
 import { useHistory } from 'react-router-dom'
-import StyledForm from './styles'
 
 const Form = () => {
   const initial_form_data = {
@@ -30,12 +31,12 @@ const Form = () => {
 
       <div>
         <label>Password *</label>
-        <input name='password' type='password' required minLength={8} onChange={changehandler} />
+        <input name='password' type='password' required minLength={8} pattern='^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$' onChange={changehandler} />
       </div>
 
       <div>
         <label>Confirm Password *</label>
-        <input name='confirm_password' type='password' required minLength={8} pattern={formData.password} onChange={changehandler} />
+        <input name='confirm_password' type='password' required pattern={formData.password} onChange={changehandler} />
       </div>
 
       <button>Register</button>
