@@ -26,14 +26,16 @@ const Opportunities: FC<OpportunitiesProps> = ({ setOpportunities, opportunities
     setOpportunities(updated_list as OpportunityType[])
   }
 
-  const isAllChecksTrue = () => opportunities.length === all_opportunities.length
+  const isAllChecked = () => opportunities.length === all_opportunities.length
+
+  const isSomeChecked = () => opportunities.length > 0
 
   return (
     <StyledTable>
       <thead>
         <tr>
           <th>
-            <input name='all' type='checkbox' onChange={changeAllCheacksHandler} checked={isAllChecksTrue()} />
+            <input name='all' type='checkbox' onChange={changeAllCheacksHandler} checked={isAllChecked()} />
           </th>
 
           <th />
@@ -44,7 +46,7 @@ const Opportunities: FC<OpportunitiesProps> = ({ setOpportunities, opportunities
         {all_opportunities.map((name, i) => (
           <tr key={i}>
             <td>
-              <input name={name} type='checkbox' onChange={checkChangeHandler} checked={opportunities.includes(name)} />
+              <input name={name} type='checkbox' onChange={checkChangeHandler} checked={opportunities.includes(name)} required={!isSomeChecked()} />
             </td>
 
             <td>{name}</td>
