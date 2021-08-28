@@ -3,9 +3,9 @@ import Card from '../../components/card'
 import Form from './components/form'
 import Style from './styles'
 
-import React from 'react'
+import React, { FC } from 'react'
 
-const NewLead = () => {
+const NewLead: FC = () => {
   return (
     <Style>
       <Card>

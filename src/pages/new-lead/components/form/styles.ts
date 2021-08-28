@@ -57,7 +57,7 @@ const StyledForm = styled.form`
     margin-right: 5%;
     width: 35%;
 
-    & p:nth-child(1) {
+    & label {
       margin: 0 0 10px 0;
       padding: 0;
     }

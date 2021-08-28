@@ -1,9 +1,9 @@
 import Logo from '../../../../components/logo'
 import StyledHeader from './styles'
 
-import React from 'react'
+import React, { FC } from 'react'
 
-const Header = () => {
+const Header: FC = () => {
   return (
     <StyledHeader>
       <Logo />

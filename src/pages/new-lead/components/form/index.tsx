@@ -1,11 +1,11 @@
 import Opportunities from './opportunities'
 import StyledForm from './styles'
 
-import { OpportunityType, Lead } from '../../../../@types/lead'
+import { OpportunityType, CustomerData, Lead } from '../../../../@types/lead'
 
-import React, { useState, FormEvent, ChangeEvent, useRef } from 'react'
+import React, { FC, useState, useRef, FormEvent, ChangeEvent } from 'react'
 
-const Form = () => {
+const Form: FC = () => {
   const initial_form_data: Lead = {
     status: 'Potential',
     data: {
@@ -16,14 +16,19 @@ const Form = () => {
     opportunities: []
   }
 
-  const [formData, setFormData] = useState(initial_form_data)
+  const [form_data, setFormData] = useState(initial_form_data)
   const message_ref = useRef<HTMLParagraphElement>(null)
 
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, data: { ...formData.data, [e.target.name]: e.target.value } })
-  }
+  const animationEndHandler = () => (message_ref.current!.className = 'noDisplay')
 
-  const opportunityHandler = (opportunities: OpportunityType[]) => setFormData({ ...formData, opportunities })
+  const setOpportunities = (opportunities: OpportunityType[]) => setFormData({ ...form_data, opportunities })
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const updated_data = { ...form_data }
+    updated_data.data[e.target.name as keyof CustomerData] = e.target.value
+
+    setFormData(updated_data)
+  }
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -32,9 +37,9 @@ const Form = () => {
 
     if (leads_list) {
       const leads = JSON.parse(leads_list)
-      leads.push(formData)
+      leads.push(form_data)
       window.localStorage.setItem('leads', JSON.stringify(leads))
-    } else window.localStorage.setItem('leads', JSON.stringify([formData]))
+    } else window.localStorage.setItem('leads', JSON.stringify([form_data]))
 
     message_ref.current!.className = 'created'
     setFormData(initial_form_data)
@@ -45,28 +50,28 @@ const Form = () => {
       <div>
         <div>
           <label>Name *</label>
-          <input name='name' autoFocus required onChange={changeHandler} value={formData.data.name} />
+          <input name='name' autoFocus required onChange={changeHandler} value={form_data.data.name} />
         </div>
 
         <div>
           <label>Phone *</label>
-          <input name='phone' required onChange={changeHandler} value={formData.data.phone} />
+          <input name='phone' required onChange={changeHandler} value={form_data.data.phone} />
         </div>
 
         <div>
           <label>Email *</label>
-          <input name='email' required onChange={changeHandler} value={formData.data.email} />
+          <input name='email' required onChange={changeHandler} value={form_data.data.email} />
         </div>
       </div>
 
       <div>
-        <p>Opportunities *</p>
+        <label>Opportunities *</label>
 
-        <Opportunities opportunities={formData.opportunities} setOpportunities={opportunityHandler} />
+        <Opportunities opportunities={form_data.opportunities} setOpportunities={setOpportunities} />
 
         <button type='submit'>Save</button>
 
-        <p className='noDisplay' onAnimationEnd={() => (message_ref.current!.className = 'noDisplay')} ref={message_ref}>
+        <p className='noDisplay' onAnimationEnd={animationEndHandler} ref={message_ref}>
           Lead created!
         </p>
       </div>

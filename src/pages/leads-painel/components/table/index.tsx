@@ -2,11 +2,11 @@ import StyledTable from './styles'
 
 import { LeadStatus, Lead } from '../../../../@types/lead'
 
-import React, { useState, DragEvent } from 'react'
+import React, { FC, useState, DragEvent } from 'react'
 
-const Table = () => {
+const Table: FC = () => {
   const fetchData = () => JSON.parse(window.localStorage.getItem('leads') || '[]') // create api file
-  const [list, setList] = useState<Lead[]>(fetchData)
+  const [lead_list, setLeadList] = useState<Lead[]>(fetchData)
 
   const allowDragHandler = (e: DragEvent<HTMLTableDataCellElement>) => e.preventDefault()
 
@@ -23,16 +23,16 @@ const Table = () => {
 
     if (index !== allowed_index) return
 
-    const updated_item = { ...list[index] }
+    const updated_item = { ...lead_list[index] }
 
     updated_item.status = e.currentTarget.dataset.status as LeadStatus
 
-    const updated_list = [...list]
+    const updated_list = [...lead_list]
     updated_list[index] = updated_item
 
     window.localStorage.setItem('leads', JSON.stringify(updated_list))
 
-    setList([...updated_list])
+    setLeadList([...updated_list])
   }
 
   return (
@@ -45,7 +45,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {list.map((lead, i) => {
+        {lead_list.map((lead, i) => {
           switch (lead.status) {
             case 'Potential':
               return (

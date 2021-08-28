@@ -1,9 +1,9 @@
 import StyledButton from './styles'
 
-import React, { MouseEvent } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import { useHistory } from 'react-router-dom'
 
-const Button = () => {
+const Button: FC = () => {
   const history = useHistory()
 
   const clickHandler = (e: MouseEvent<HTMLButtonElement>) => {

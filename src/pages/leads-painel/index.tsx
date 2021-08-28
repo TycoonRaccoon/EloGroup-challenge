@@ -4,9 +4,9 @@ import Card from '../../components/card'
 import Table from './components/table'
 import Style from './styles'
 
-import React from 'react'
+import React, { FC } from 'react'
 
-const LeadsPainel = () => {
+const LeadsPainel: FC = () => {
   return (
     <Style>
       <Card>
