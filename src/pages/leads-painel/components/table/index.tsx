@@ -42,7 +42,7 @@ const Table: FC = () => {
         <tr>
           <th>Potential Client</th>
           <th>Confirmed Data</th>
-          <th>Scheduled</th>
+          <th>Scheduled meeting</th>
         </tr>
       </thead>
       <tbody>
