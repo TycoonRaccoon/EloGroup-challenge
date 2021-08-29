@@ -36,10 +36,8 @@ const Form: FC = () => {
 
     const leads_list = api.get('leads')
 
-    if (leads_list) {
-      leads_list.push(form_data)
-      api.post('leads', leads_list)
-    } else api.post('leads', [form_data])
+    leads_list.push(form_data)
+    api.post('leads', leads_list)
 
     message_ref.current!.className = 'created'
     setFormData(initial_form_data)

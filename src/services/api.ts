@@ -1,4 +1,4 @@
-type UrlTypes = 'user' | 'leads'
+type UrlTypes = 'users' | 'leads'
 
 const get = (url: UrlTypes) => {
   const data = window.localStorage.getItem(url)

@@ -19,7 +19,11 @@ const Form: FC = () => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    api.post('user', form_data)
+    const users_list = api.get('users')
+
+    users_list.push(form_data)
+    api.post('users', users_list)
+
     history.push('/leads-painel')
   }
 
