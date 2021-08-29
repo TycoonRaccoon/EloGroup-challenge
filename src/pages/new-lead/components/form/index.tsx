@@ -1,4 +1,5 @@
 import Opportunities from './opportunities'
+import api from '../../../../services/api'
 import StyledForm from './styles'
 
 import { OpportunityType, CustomerData, Lead } from '../../../../@types/lead'
@@ -33,13 +34,12 @@ const Form: FC = () => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const leads_list = window.localStorage.getItem('leads')
+    const leads_list = api.get('leads')
 
     if (leads_list) {
-      const leads = JSON.parse(leads_list)
-      leads.push(form_data)
-      window.localStorage.setItem('leads', JSON.stringify(leads))
-    } else window.localStorage.setItem('leads', JSON.stringify([form_data]))
+      leads_list.push(form_data)
+      api.post('leads', leads_list)
+    } else api.post('leads', [form_data])
 
     message_ref.current!.className = 'created'
     setFormData(initial_form_data)

@@ -1,3 +1,4 @@
+import api from '../../../../services/api'
 import StyledTable from './styles'
 
 import { LeadStatus, Lead } from '../../../../@types/lead'
@@ -5,7 +6,7 @@ import { LeadStatus, Lead } from '../../../../@types/lead'
 import React, { FC, useState, DragEvent } from 'react'
 
 const Table: FC = () => {
-  const fetchData = () => JSON.parse(window.localStorage.getItem('leads') || '[]') // create api file
+  const fetchData = () => api.get('leads')
   const [lead_list, setLeadList] = useState<Lead[]>(fetchData)
 
   const allowDragHandler = (e: DragEvent<HTMLTableDataCellElement>) => e.preventDefault()
@@ -30,7 +31,7 @@ const Table: FC = () => {
     const updated_list = [...lead_list]
     updated_list[index] = updated_item
 
-    window.localStorage.setItem('leads', JSON.stringify(updated_list))
+    api.post('leads', updated_list)
 
     setLeadList([...updated_list])
   }

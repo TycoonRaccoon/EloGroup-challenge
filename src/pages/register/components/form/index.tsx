@@ -1,3 +1,4 @@
+import api from '../../../../services/api'
 import StyledForm from './styles'
 
 import React, { FC, useState, FormEvent, ChangeEvent } from 'react'
@@ -18,7 +19,7 @@ const Form: FC = () => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    window.localStorage.setItem('user', JSON.stringify(form_data))
+    api.post('user', form_data)
     history.push('/leads-painel')
   }
 
